@@ -27,25 +27,35 @@ $data = array(
     'desc' => '999'
 );
 
+
+
+function parseData($value){
+    if(is_string($value)){
+        return "'".$value."'";
+    }else{
+        return $value;
+    }
+}
 //insert('abc',$data);
-function insert($table,$data,$return=true){
-    $sql = "INSERT INTO" .table($table). "(";
+function insert($table,$data,$return = true){
+    $sql = " INSERT INTO  ".table($table). "(";
     $keys = array_keys($data);
     $fields = $values = array();
     foreach($keys as $v){
-        $fields[] =  '`'.$v.'`';
-        $values[] =  "'".$data[$v]."'";
+        $fields[] = '`'.$v.'`';
+        $values[] = parseData($data[$v]);
     }
     $sql.= implode(',',$fields);
-    $sql.= ") VALUES (";
+    $sql.= " ) VALUE (";
     $sql.= implode(',',$values);
-    $sql.= ")";
+    $sql.= "); ";
+
     mysql_query($sql);
     if($return){
         return mysql_insert_id();
     }
-
 }
+
 
 
 $data2 = array(

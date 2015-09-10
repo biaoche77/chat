@@ -1,0 +1,115 @@
+分类
+    母婴、女装
+    无限极树
+
+商品
+
+
+
+属性
+品牌
+
+奶粉
+婴儿 0-1  1-2 2-3
+儿童 3-5
+
+
+诺优能4段奶粉
+
+
+
+category    分类表
+
+goods       商品
+    id
+    goods_name
+    goods_price
+    brand_id
+    user_id
+
+
+brand   品牌
+    brand_id
+    brand_name
+
+tag     标签          时尚、高雅、科技
+    tag_id
+    tag_name
+    brand_id
+
+
+
+brand_id    brand_name
+b1          美特斯邦威
+b2          特步
+b11         森马
+
+
+
+t1 b1
+t1 b2
+t2 b2
+
+
+tag_id      tag_name
+t1          时尚
+t2          高雅
+t12         城市
+
+
+删除的问题？？？
+查找的问题？？
+
+user
+user_id
+user_name
+
+
+
+
+one
+o2m
+m2m
+
+
+
+
+
+article
+    aid
+    title
+content
+    cid
+    aid
+    content
+
+comment
+    pid     自增
+    aid     文章id
+    uid     用户id
+    rid     回复的pid
+
+
+自增  文章id    用户id    回复的pid  内容
+1       10      5       0           123
+2       10      5       0           sddas
+3       10      6       1           dasd
+4       10      7       3           sd
+5
+
+
+
+
+
+
+
+
+时间多    空间少
+时间少     空间多
+
+
+SELECT t.tag_id, t.tag_name, COUNT( t.tag_id ) AS ctid
+FROM  `tag` AS t
+INNER JOIN tag_brand AS tb ON t.tag_id = tb.tid
+GROUP BY t.tag_id
+LIMIT 0 , 30

@@ -31,7 +31,7 @@ head();
         //查询数据
 
         $sql = ' SELECT * FROM '.table('article_title');
-        $sql.= ' ORDER BY `created_at` DESC ';
+        $sql.= ' ORDER BY `aid` DESC ';
         $sql.= $where;
 
         $query = mysql_query($sql);
@@ -39,16 +39,17 @@ head();
         ?>
 
 
-        <?php while($row = mysql_fetch_assoc($query)):?>
+        <?php while($row = mysql_fetch_assoc($query)): ?>
             <tr>
-                <td><?=$row['title']?></td>
+                <td>
+                    <a href="<?=url('article','view')?>&aid=<?=$row['aid']?>"><?=$row['title']?></a>
+                </td>
                 <td><?=date('Y-m-d H:i',$row['created_at'])?></td>
                 <td><?=$row['username']?></td>
                 <td><?=$row['view_count']?></td>
                 <td>
                     <a href="<?=url('article','create')?>&aid=<?=$row['aid']?>&op=update">编辑</a>
-                    <a href="<?=url('article','delete')?>">删除</a>
-
+                    <a href="<?=url('article','delete')?>&aid=<?=$row['aid']?> ">删除</a>
                 </td>
             </tr>
         <?php endwhile;?>
@@ -66,4 +67,16 @@ foot();
 
 
 
+
+
+
+
+//if(isset($_POST['searchBtn'])&& $_POST['searchBtn']=='yes' ){
+//    $search="SELECT *
+//FROM  `pre_article_content`
+//WHERE  `content` LIKE  '%".$_POST['search'].""%'
+//LIMIT 0 , 30";
+//
+//
+//}
 

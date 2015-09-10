@@ -15,15 +15,16 @@ if($op == 'update'){
     $sql.= ' ON `t`.`aid` = `c`.`aid` ';
     $sql.= " WHERE 1 ";
     $sql.= " AND `t`.`aid` = $aid ";
-    if($_SESSION['uid'] != 3){
+    if($_SESSION['uid'] != 1){
         $sql.= " AND t.`uid`='$_SESSION[uid]' ";
     }
     $query = mysql_query($sql);
     $result = mysql_fetch_assoc($query);
 
-    if(empty($result)){
-        showMsg('要编辑的数据不存在或者你没有权限',url('article','index'));
-    }
+
+//    if(empty($result)){
+//        showMsg('要编辑的数据不存在或者你没有权限',url('article','index'));
+//    }
 }
 
 
@@ -47,18 +48,35 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'yes') {
     $insert['created_at'] = $insert['updated_at'] = TIMESTAMP;
 
 
-
-
-
     if(empty($insert['title'])){
         exit('请输入商品标题');
     }
 
-
+    print_r($_POST['desc']);
 
     if($op == 'update'){
 
+        //$sql="UPDATE `pre_article_title` SET title= '".$_POST['title']. "' WHERE aid=".$aid;
 
+        //$sql="UPDATE `pre_article_title` SET desc= '".$_POST['desc']. "' WHERE aid= $aid";
+        //$sql = "UPDATE  `php_msg`.`pre_article_title` SET  `desc` =  '".$_POST['desc']."' WHERE  `pre_article_title`.`aid` ='$aid'";
+
+
+         $sql=  "UPDATE  `php_msg`.`pre_article_title` SET  `title` =  '".$insert['title']."',
+`desc` =  '".$insert['desc']."',
+`shop_price` =  '".$insert['shop_price']."'  WHERE  `pre_article_title`.`aid` ='$aid'";
+
+
+        $sql2="UPDATE `pre_article_content` SET content= '".$_POST['content']. "' WHERE aid= $aid";
+
+
+
+
+
+
+        $query= mysql_query($sql);
+
+        $query= mysql_query($sql2);
 
     }else{
         $content['aid'] = insert('article_title',$insert);
@@ -71,7 +89,7 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'yes') {
 
 
 
-    showmessage('发布成功',url('article'),'success');
+    showMsg('发布成功',url('article'),'success');
 } else {
     //显示界面
     head();
@@ -79,7 +97,7 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'yes') {
     <form class="form-horizontal" method="post">
 
         <div class="form-group">
-            <label for="inputEmail3" class="col-sm-2 control-label">商品标题</label>
+            <label for="inputEmail3" class="col-sm-2 control-label">文章标题</label>
 
             <div class="col-sm-10">
                 <input name="title" value="<?=showResult($result,'title')?>" type="text" class="form-control" id="inputEmail3">
@@ -87,10 +105,10 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'yes') {
         </div>
 
         <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">商品简介</label>
+            <label for="inputPassword3" class="col-sm-2 control-label">文章简介</label>
 
             <div class="col-sm-10">
-                <textarea name="desc" class="form-control" rows="3"><?=showResult($result,'desc')?></textarea>
+                <textarea name="desc" class="form-control" rows="3"> <?=showResult($result,'desc')?></textarea>
             </div>
         </div>
 
@@ -108,7 +126,7 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'yes') {
             </div>
         </div>
         <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">商品详情</label>
+            <label for="inputPassword3" class="col-sm-2 control-label">文章详情</label>
 
             <div class="col-sm-10">
                 <textarea name="content" class="form-control" rows="5"><?=showResult($result,'content')?></textarea>
@@ -125,6 +143,6 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'yes') {
     foot();
 }
 ?>
-
-
-
+	
+	
+	

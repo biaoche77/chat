@@ -8,6 +8,8 @@
 //设置时区
 date_default_timezone_set('Asia/Shanghai');
 
+define("TIMESTAMP",time());
+
 
 //D:\wamp\www\msg
 define('PATH_ROOT',dirname(dirname(__FILE__)));
@@ -17,6 +19,7 @@ define('PATH_ROOT',dirname(dirname(__FILE__)));
 define('IN_PHPMSG',true);
 
 $config = require('config/config.php');
+
 
 require (PATH_ROOT.'/core/function.php');
 require (PATH_ROOT.'/core/function_db.php');

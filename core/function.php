@@ -23,7 +23,7 @@ function foot(){
 
 
 
-function checkLogined($return = false){
+function  checkLogined($return = false){
     $boolean = isset($_SESSION['uid']) && $_SESSION['uid'];
     if($return){
         return $boolean;
@@ -167,4 +167,12 @@ function show_page($count,$page,$page_size)
         }
         echo "<ul class=\"pagination\">$navs</ul>";
     }
+}
+
+
+function showResult($data,$field){
+    if($data && isset($data[$field])){
+        return $data[$field];
+    }
+    return '';
 }
